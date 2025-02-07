@@ -1,0 +1,77 @@
+.add-books-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.book-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.book-card.selected {
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 2px var(--color-secondary);
+}
+
+.book-cover {
+  position: relative;
+  aspect-ratio: 2/3;
+  background: var(--color-background);
+}
+
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.selected-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(var(--color-secondary-rgb), 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected-overlay i {
+  font-size: 2rem;
+  color: white;
+}
+
+.category-tag {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background: var(--color-background);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  margin: 0.25rem;
+}
+
+.primary-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Inherit other needed styles from CollectionsPage.css */

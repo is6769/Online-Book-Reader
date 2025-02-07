@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": { "type": "integer" },
+    "title": { "type": "string" },
+    "author": { "type": "string" },
+    "cover": { "type": "string", "format": "uri" },
+    "genre": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer" },
+        "name": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "pages": { "type": "integer", "minimum": 1 },
+    "language": { "type": "string" },
+    "description": { "type": "string" },
+    "publishedAt": { "type": "string", "format": "date-time" },
+    "bookStatus": {
+      "type": "string",
+      "enum": ["finished", "in-progress", "frozen"]
+    },
+    "isbn": { "type": "string" },
+    "publisher": { "type": "string" },
+    "categories": { "type": "array", "items": { "type": "string" } },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" }
+        },
+        "required": ["id", "name"]
+      }
+    },
+    "series": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string"},
+        "status": { "type": "string", "enum": ["finished", "in-progress", "frozen"] },
+        "bookNumber": { "type": "integer" }
+      }
+    },
+    "chapters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "title": { "type": "string" },
+          "content": { "type": "string" },
+          "wordsCount": { "type": "integer" },
+          "status": { "type": "string", "enum": ["draft", "published", "scheduled"] },
+          "orderNumber": { "type": "integer" },
+          "lastModified": { "type": "string", "format": "date-time" },
+          "scheduledFor": { "type": "string", "format": "date-time" }
+        },
+        "required": ["id", "title", "content", "orderNumber"]
+      }
+    },
+    "awards": { "type": "array", "items": { "type": "string" } },
+    "bookPreview": { "type": "string", "format": "uri" },
+    "lastUpdated": { "type": "string", "format": "date-time" },
+    "bookComments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "userId": { "type": "integer" },
+          "content": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "lastModified": { "type": "string", "format": "date-time" },
+          "likes": { "type": "integer" },
+          "replies": {
+            "type": "array",
+            "items": { "$ref": "#/properties/comments/items" }
+          }
+        },
+        "required": ["id", "userId", "content", "createdAt"]
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "language": { "type": "string" },
+        "targetAudience": { "type": "string" },
+        "contentWarnings": { "type": "array", "items": { "type": "string" } },
+        "copyright": { "type": "string" }
+      }
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "rating": { "type": "number", "minimum": 0, "maximum": 5 },
+        "readersCount": { "type": "integer" },
+        "views": { "type": "integer" },
+        "likes": { "type": "integer" },
+        "commentsCount": { "type": "integer" },
+        "totalReviews": { "type": "integer" }
+      }
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "author",
+    "cover",
+    "genre",
+    "pages",
+    "language",
+    "description",
+    "publishedAt",
+    "chapters",
+    "stats",
+    "bookComments"
+  ]
+}

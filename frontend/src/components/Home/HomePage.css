@@ -1,0 +1,370 @@
+@import url("https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css");
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-content {
+  margin-top: 64px;
+  padding: 2rem 0;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-decoration: none !important;
+  border: none;
+}
+
+
+.page-subtitle {
+  color: var(--color-text-light);
+  font-size: 1.1rem;
+}
+
+/* Unified Book Sections Styling */
+.section,
+.featured-section {
+  margin: 3rem 0;
+  position: relative;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.section:last-child,
+.featured-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.section-title,
+.featured-section h2 {
+  font-size: 1.75rem;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Unified Carousel Styling */
+.carousel {
+  cursor: grab;
+  overflow: hidden;
+  background: transparent;
+  margin: 0 -1rem;
+  padding: 1rem;
+  position: relative;
+  user-select: none; /* Prevent text selection while dragging */
+  touch-action: pan-y pinch-zoom;
+}
+
+.carousel:active {
+  cursor: grabbing;
+}
+
+.inner-carousel {
+  display: flex;
+  gap: 1.5rem;
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+  padding: 0.5rem; /* Add padding to show box-shadow */
+  cursor: grab;
+}
+
+.inner-carousel:active {
+  cursor: grabbing;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Update Card Styling to match Library */
+.carousel-item {
+  min-width: 180px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-white);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: none;
+  overflow: hidden;
+  cursor: pointer;
+  margin-right: 1rem;
+  position: relative;
+}
+
+.carousel-item:hover:not(:active) {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-item:active {
+  cursor: grabbing;
+  transform: scale(0.98);
+  transition-duration: 0.1s;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border: none;
+}
+
+.carousel-item .book-info {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 100px;
+  position: relative;
+}
+
+.carousel-item h3 {
+  margin: 0;
+  font-size: 1rem; /* Slightly smaller font */
+  margin-bottom: 0.25rem; /* Reduced margin */
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.book-info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.carousel-item p {
+  color: var(--color-text-light);
+  font-size: 0.85rem; /* Slightly smaller font */
+  margin: 0;
+}
+
+.book-info p {
+  color: var(--color-text-light);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.stats {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-text-light);
+  font-size: 0.875rem;
+}
+
+.stats span i {
+  font-size: 1.1rem;
+  color: var(--color-secondary);
+}
+
+.genre-badge {
+  position: absolute;
+  top: -12px;
+  right: 8px;
+  background: var(--color-secondary);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.book-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 0;
+  margin-top: 8px;
+}
+
+.meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  position: relative;
+}
+
+.meta-tag:not(:last-child) {
+  padding-right: 12px;
+}
+
+.meta-tag:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: var(--color-border);
+}
+
+.meta-tag i {
+  font-size: 0.9rem;
+  color: var(--color-secondary);
+}
+
+/* Keep the meta-row for the layout but adjust its style */
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ...existing code... */
+
+.book-info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.book-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-info p {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+/* Remove all book-meta related styles */
+.book-meta,
+.meta-tag,
+.meta-row {
+  display: none;
+}
+
+.book-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: var(--color-background);
+  color: var(--color-text-light);
+}
+
+.badge i {
+  font-size: 0.9rem;
+  color: var(--color-secondary);
+}
+
+.rating-badge {
+  color: var(--color-secondary);
+}
+
+.carousel-item .hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.carousel-item:hover .hover-overlay {
+  opacity: 1;
+}
+
+.read-now-btn {
+  background: var(--color-secondary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transform: translateY(20px);
+  transition: transform 0.2s;
+}
+
+.carousel-item:hover .read-now-btn {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .carousel-item {
+    min-width: 160px; /* Smaller on mobile */
+  }
+
+  .carousel-item img {
+    aspect-ratio: 2/3; /* Maintain ratio */
+  }
+}
+
+.header-section {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border);
+}

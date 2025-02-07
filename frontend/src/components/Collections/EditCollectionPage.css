@@ -1,0 +1,84 @@
+@import './CreateCollectionPage.css';
+
+/* Only keep unique styles for edit page */
+.icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0 1.5rem;
+}
+
+.icon-btn {
+  flex: 0 0 auto;
+  width: 100px;
+  height: 100px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-background);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.icon-btn i {
+  font-size: 1.5rem;
+  color: var(--color-text);
+}
+
+.icon-btn.selected {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.icon-btn.selected i {
+  color: white;
+}
+
+.edit-collection-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.collection-form {
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group {
+  padding: 0 1.5rem;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.cancel-btn {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-background);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submit-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-secondary);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+  opacity: 0.9;
+}

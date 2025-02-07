@@ -1,0 +1,727 @@
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  background-color: var(--color-secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: white;
+  font-weight: 600;
+}
+
+.profile-details h1 {
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.profile-details p {
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+.edit-profile-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-secondary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.edit-profile-button:hover {
+  background-color: #a34e2f;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--color-white);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.stat-card h3 {
+  margin: 0;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-light);
+  font-size: 1rem;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.profile-sections {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.section {
+  background: var(--color-white);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.section h2 {
+  margin: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--color-background);
+  border-radius: 8px;
+}
+
+.book-info h4 {
+  margin: 0;
+  margin-bottom: 0.25rem;
+}
+
+.read-date {
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+}
+
+.book-rating {
+  color: #ffc107;
+}
+
+.preferences-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.preference-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background: var(--color-background);
+  border-radius: 8px;
+}
+
+.profile-badges {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.badge.author {
+  background: var(--color-secondary);
+  color: white;
+}
+
+.badge.premium {
+  background: linear-gradient(135deg, #2c3e50, #3498db);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-tabs {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.profile-tabs .tab {
+  padding: 1rem 2rem;
+  border: none;
+  background: none;
+  color: var(--color-text-light);
+  font-size: 1rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.profile-tabs .tab.active {
+  color: var(--color-secondary);
+}
+
+.profile-tabs .tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-secondary);
+}
+
+.achievements-section {
+  margin-top: 3rem;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.achievement-card {
+  background: var(--color-white);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.achievement-card i {
+  font-size: 2rem;
+  color: var(--color-secondary);
+  margin-bottom: 1rem;
+}
+
+.books-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.create-book-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-secondary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.book-card {
+  background: var(--color-white);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.book-card h3 {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.book-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.status-badge.published {
+  background: #4caf50;
+  color: white;
+}
+
+.status-badge.draft {
+  background: #ff9800;
+  color: white;
+}
+
+.book-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.book-actions button {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.book-actions button:hover {
+  background: var(--color-background);
+}
+
+.collections-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.create-collection-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-secondary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.create-collection-btn:hover {
+  background: #a34e2f;
+}
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Collections styles */
+.collections-content {
+  padding: 1rem 0;
+}
+
+.section-header {
+  margin: 2rem 0 1.5rem;
+}
+
+.section-header h2 {
+  font-size: 1.4rem;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.section-header p {
+  margin: 0.5rem 0 0;
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+}
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.collection-card {
+  display: block;
+  background: var(--color-white);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.collection-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.collection-card.default {
+  border-left: 4px solid var(--color-secondary);
+}
+
+.collection-card.custom {
+  border-left: 4px solid #42a5f5;
+}
+
+.collection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.collection-content {
+  padding: 1.5rem;
+}
+
+.collection-description {
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.collection-meta {
+  margin-bottom: 1rem;
+}
+
+.collection-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.update-date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-light);
+  font-size: 0.85rem;
+}
+
+.view-btn {
+  padding: 0.5rem 1rem;
+  background: var(--color-secondary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.view-btn:hover {
+  opacity: 0.9;
+}
+
+.collection-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  color: var(--color-text-light);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color 0.2s;
+}
+
+.action-btn:hover {
+  color: var(--color-secondary);
+}
+
+.action-btn i.bx-trash:hover {
+  color: #dc3545;
+}
+
+.collection-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+  border-radius: 8px;
+  color: var(--color-secondary);
+}
+
+.collection-icon i {
+  font-size: 1.25rem;
+}
+
+.collection-content h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: var(--color-text);
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--color-white);
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.secondary-btn {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.danger-btn {
+  border: none;
+  background: #dc3545;
+  color: white;
+}
+
+/* Original Works styles */
+.original-works-content {
+  padding: 1rem 0;
+}
+
+.create-work-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-secondary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.create-work-btn:hover {
+  opacity: 0.9;
+}
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.work-card {
+  background: var(--color-white);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.work-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.work-cover {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.work-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.status-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: white;
+  text-transform: capitalize;
+}
+
+.status-published {
+  background: #4caf50;
+}
+
+.status-draft {
+  background: #ff9800;
+}
+
+.work-content {
+  padding: 1.5rem;
+}
+
+.work-description {
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 1rem;
+  line-height: 1.5;
+}
+
+.work-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.work-stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+}
+
+.work-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.genre {
+  color: var(--color-secondary);
+  font-size: 0.9rem;
+}
+
+.update-date {
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+}
+
+.work-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.work-actions button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: none;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.work-actions button:hover {
+  background: var(--color-background);
+}
+
+.work-actions .delete-btn:hover {
+  background: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+
+@media (max-width: 768px) {
+  .profile-sections {
+    grid-template-columns: 1fr;
+  }
+  
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .edit-profile-button {
+    align-self: stretch;
+  }
+
+  .profile-tabs {
+    overflow-x: auto;
+    padding-bottom: 1px;
+  }
+  
+  .books-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .create-book-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .collections-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .create-collection-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .works-grid {
+    grid-template-columns: 1fr;
+  }
+}

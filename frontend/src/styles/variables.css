@@ -1,0 +1,55 @@
+:root {
+  /* Light theme */
+  --color-primary: #372213;
+  --color-secondary: #B85C38;
+  --color-background: #F4F1EA;
+  --color-text: #382110;
+  --color-text-light: #766B5D;
+  --color-border: #D8D8D8;
+  --color-white: #FFFFFF;
+  --color-success: #409D69;
+  --color-link: #00635D;
+}
+
+[data-theme='dark'] {
+  --color-primary: #1a1a1a;
+  --color-secondary: #C65832;
+  --color-background: #121212;
+  --color-text: #E1D9D1;
+  --color-text-light: #9E9E9E;
+  --color-border: #2F2F2F;
+  --color-white: #1E1E1E;
+  --color-success: #4CAF50;
+  --color-link: #80CBC4;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 4px; /* Even thinner */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+  border-radius: 8px; /* Increased radius */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary);
+  border-radius: 8px; /* Increased radius */
+  border: none; /* Remove border to make it more rectangular */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a34e2f;
+}
+
+/* Remove up and down buttons */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-secondary) var(--color-background);
+}

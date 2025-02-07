@@ -1,0 +1,178 @@
+.create-collection-page {
+  max-width: 1200px; /* Match collections page width */
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.collection-form-container {
+  width: 100%;
+  margin: 0;
+  background: var(--color-white);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  padding: 1.5rem;
+  box-sizing: border-box; /* Add this to ensure padding is included in width */
+}
+
+.collection-form {
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group {
+  padding: 0 1.5rem;  /* Match the form padding */
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  margin-left: -1.5rem; /* Pull label back to align with form edge */
+  padding-left: 1.5rem;
+  width: 100%;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;  /* Take full width of parent */
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0 0;  /* Remove padding to align with text fields */
+  margin-left: -1.5rem;  /* Pull back to align with labels */
+  margin-right: -1.5rem;
+  padding-left: 1.5rem; /* Add back left padding to match text fields */
+  padding-right: 1.5rem;
+}
+
+.icon-btn {
+  flex: 0 0 auto;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-background);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.icon-btn i {
+  font-size: 2rem;
+  color: var(--color-text);
+}
+
+.icon-btn span {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  text-align: center;
+  line-height: 1.2;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon-btn:hover {
+  background: var(--color-border);
+}
+
+.icon-btn.selected {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.icon-btn.selected i,
+.icon-btn.selected span {
+  color: white;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.cancel-btn {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-background);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submit-btn,
+.action-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-secondary);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submit-btn:hover,
+.action-btn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .create-collection-page {
+    padding: 1rem;
+  }
+
+  .collection-form-container {
+    padding: 1rem;
+  }
+
+  .icon-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+  }
+}
