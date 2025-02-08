@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
 import './BookPage.css';
+import CommentSection from '../Comments/CommentSection';
+
+interface Chapter {
+  id: string;
+  number: number;
+  title: string;
+  publishedAt: Date;
+  commentsCount: number;
+}
 
 interface BookMetadata {
   id: string;
@@ -18,6 +27,7 @@ interface BookMetadata {
   readersCount: number;
   isLiked?: boolean;
   userRating?: number;
+  chapters: Chapter[];
 }
 
 const BookPage: React.FC = () => {
@@ -36,7 +46,37 @@ const BookPage: React.FC = () => {
     series: { name: 'The Epic Series', position: 1 },
     lastUpdated: new Date(),
     rating: 4.5,
-    readersCount: 5678
+    readersCount: 5678,
+    chapters: [
+      {
+        id: '1',
+        number: 1,
+        title: 'The Beginning',
+        publishedAt: new Date('2024-01-01T12:30:00'),
+        commentsCount: 45
+      },
+      {
+        id: '2',
+        number: 2,
+        title: 'The Journey Begins',
+        publishedAt: new Date('2024-01-15T15:20:00'),
+        commentsCount: 32
+      },
+      {
+        id: '3',
+        number: 3,
+        title: 'Unexpected Allies',
+        publishedAt: new Date('2024-02-01T09:45:00'),
+        commentsCount: 28
+      },
+      {
+        id: '4',
+        number: 4,
+        title: 'The First Challenge',
+        publishedAt: new Date('2024-02-15T18:15:00'),
+        commentsCount: 19
+      }
+    ]
   };
 
   const [activeSection, setActiveSection] = useState('chapters');
@@ -158,7 +198,7 @@ const BookPage: React.FC = () => {
       </div>
 
       <div className="book-full-width-content">
-        <div className="book-description">
+        <div className="n-book-description">
           <h3>Description</h3>
           <p>{book.description}</p>
         </div>
@@ -175,18 +215,18 @@ const BookPage: React.FC = () => {
             </li>
             <li>
               <button 
-                className={activeSection === 'reviews' ? 'active' : ''}
-                onClick={() => setActiveSection('reviews')}
-              >
-                Reviews
-              </button>
-            </li>
-            <li>
-              <button 
                 className={activeSection === 'comments' ? 'active' : ''}
                 onClick={() => setActiveSection('comments')}
               >
                 Comments
+              </button>
+            </li>
+            <li>
+              <button 
+                className={activeSection === 'reviews' ? 'active' : ''}
+                onClick={() => setActiveSection('reviews')}
+              >
+                Reviews
               </button>
             </li>
             <li>
@@ -201,7 +241,30 @@ const BookPage: React.FC = () => {
         </nav>
 
         <div className="section-content">
-          {/* Content for each section will be rendered here based on activeSection */}
+          {activeSection === 'chapters' && (
+            <div className="chapters-list">
+              {book.chapters.map(chapter => (
+                <div key={chapter.id} className="chapter-item">
+                  <div className="chapter-main">
+                    <span className="chapter-number">Chapter {chapter.number}</span>
+                    <h3 className="chapter-title">{chapter.title}</h3>
+                  </div>
+                  <div className="chapter-info">
+                    <span className="chapter-comments">{chapter.commentsCount} comments</span>
+                    <span className="chapter-date">
+                      {chapter.publishedAt.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {activeSection === 'comments' && (
+            <div className="book-comments">
+              <CommentSection />
+            </div>
+          )}
+          {/* Other section content remains unchanged */}
         </div>
       </div>
     </div>

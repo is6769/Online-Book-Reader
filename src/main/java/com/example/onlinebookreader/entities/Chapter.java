@@ -37,6 +37,8 @@ public class Chapter {
 
     private LocalDateTime scheduledFor;
 
+    private LocalDateTime publishedAt;
+
     @ManyToOne
     @JoinColumn(
             name = "book_id",
