@@ -3,6 +3,7 @@ package com.example.onlinebookreader.config;
 import com.example.onlinebookreader.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,11 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    @Bean
-    public UserDetailsService userDetailsService(){
-        CustomUserDetailsService customUserDetailsService = new CustomUserDetailsService();
-        return customUserDetailsService;
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){

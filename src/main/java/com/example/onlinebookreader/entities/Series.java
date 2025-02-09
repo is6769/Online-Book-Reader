@@ -27,7 +27,6 @@ public class Series {
     @ManyToOne
     @JoinColumn(
             name = "author_id",
-            referencedColumnName = "books",
             nullable = false
     )
     private CommonUser author;

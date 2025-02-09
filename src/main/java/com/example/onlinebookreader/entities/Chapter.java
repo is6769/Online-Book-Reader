@@ -42,7 +42,6 @@ public class Chapter {
     @ManyToOne
     @JoinColumn(
             name = "book_id",
-            referencedColumnName = "id",
             nullable = false
     )
     private Book book;

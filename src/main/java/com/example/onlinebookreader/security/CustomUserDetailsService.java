@@ -9,21 +9,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsManager {
 
-    @Autowired
+
     private UserRepository repository;
+    private PasswordEncoder passwordEncoder;
 
-
+    @Autowired
+    public CustomUserDetailsService(UserRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public void createUser(UserDetails userDetails) {
         if (userDetails instanceof ApplicationUserDetails applicationUserDetails){
             var user = applicationUserDetails.getUser();
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             if (user instanceof AdminUser adminUser){
                 repository.save(adminUser);
             }else if (user instanceof CommonUser commonUser){
@@ -49,6 +55,8 @@ public class CustomUserDetailsService implements UserDetailsManager {
     public void changePassword(String oldPassword, String newPassword) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        user.setPassword(passwordEncoder.encode(newPassword));
+        repository.save(user);
 
 
 

@@ -171,7 +171,6 @@ public class Book {
     @ManyToOne
     @JoinColumn(
             name = "author_id",
-            referencedColumnName = "books",
             nullable = false
     )
     private CommonUser author;
@@ -182,14 +181,11 @@ public class Book {
     @ManyToOne
     @JoinColumn(
             name = "genre_id",
-            referencedColumnName = "id",
             nullable = false
     )
     private Genre genre;
 
     private Integer pages;
-
-    private String language;
 
     private String description;
 
@@ -202,7 +198,6 @@ public class Book {
 
     private String publisher;
 
-    @Enumerated
     private String format;
 
     @ManyToMany
@@ -216,7 +211,6 @@ public class Book {
     @ManyToOne
     @JoinColumn(
             name = "series_id",
-            referencedColumnName = "id",
             nullable = false
     )
     private Series series;

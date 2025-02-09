@@ -27,7 +27,6 @@ public class Review {
     @ManyToOne
     @JoinColumn(
             name = "author_id",
-            referencedColumnName = "id",
             nullable = false
     )
     private CommonUser author;
@@ -45,7 +44,6 @@ public class Review {
     @ManyToOne
     @JoinColumn(
             name = "book_id",
-            referencedColumnName = "id",
             nullable = false
     )
     private Book book;

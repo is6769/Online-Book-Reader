@@ -1,6 +1,8 @@
 package com.example.onlinebookreader.entities.security;
 
 
+import com.example.onlinebookreader.entities.comments.ChapterComment;
+import com.example.onlinebookreader.entities.comments.Comment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

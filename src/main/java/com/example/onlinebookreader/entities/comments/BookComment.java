@@ -1,6 +1,7 @@
 package com.example.onlinebookreader.entities.comments;
 
 import com.example.onlinebookreader.entities.book.Book;
+import com.example.onlinebookreader.entities.security.CommonUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,17 +23,19 @@ import java.util.List;
 public class BookComment extends Comment {
 
     @ManyToOne
+    @JoinColumn(name = "author_id")
+    private CommonUser author;
+
+    @ManyToOne
     @JoinColumn(
             name = "book_id",
-            referencedColumnName = "id",
             nullable = false
     )
     private Book book;
 
     @ManyToOne
     @JoinColumn(
-            name = "parent_comment_id",
-            referencedColumnName = "id"
+            name = "parent_comment_id"
     )
     private BookComment parentComment;
 

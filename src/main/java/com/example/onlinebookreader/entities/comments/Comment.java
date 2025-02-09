@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -20,13 +22,10 @@ public class Comment {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "id")
-    private User commenter;
-
     @Column(nullable = false)
     private String content;
 
+    @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
