@@ -5,7 +5,7 @@ import './LoginPage.css';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    nickname: '', // Changed from name
+    username: '', // Changed from nickname
     email: '',
     password: '',
     confirmPassword: ''
@@ -31,10 +31,14 @@ const RegisterPage = () => {
     }
 
     try {
-      await register(formData.nickname, formData.email, formData.password); // Changed from name
+      await register(formData.username, formData.email, formData.password); // Changed from nickname
       navigate('/');
     } catch (err) {
-      setError('Failed to create an account');
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Failed to create an account');
+      }
     }
   };
 
@@ -48,11 +52,11 @@ const RegisterPage = () => {
         
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="nickname">Nickname</label>
+            <label htmlFor="username">Username</label> {/* Changed from nickname */}
             <input
               type="text"
-              id="nickname"
-              value={formData.nickname}
+              id="username" // Changed from nickname
+              value={formData.username} // Changed from nickname
               onChange={handleChange}
               required
               maxLength={30}

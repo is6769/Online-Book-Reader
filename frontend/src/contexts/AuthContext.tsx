@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useCallback } from 'react';
 
 interface User {
   id: string;
-  nickname: string; // Changed from name
+  username: string; // Changed from nickname
   email: string;
 }
 
@@ -10,10 +10,23 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (nickname: string, email: string, password: string) => Promise<void>; // Changed parameter name
+  register: (username: string, email: string, password: string) => Promise<void>; // Changed parameter name
   logout: () => void;
   error: string | null;
 }
+
+interface MockUser extends User {
+  password: string;
+}
+
+const MOCK_USERS: MockUser[] = [
+  {
+    id: '1',
+    username: 'testuser',
+    email: 'test@example.com',
+    password: 'password123'
+  }
+];
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
@@ -24,30 +37,7 @@ const AuthContext = createContext<AuthContextType>({
   error: null
 });
 
-// Mock users data
-const MOCK_USERS = [
-  {
-    id: '1',
-    nickname: 'John Doe',
-    email: 'user@example.com',
-    password: 'user123', // In real app, passwords would be hashed
-    role: 'user'
-  },
-  {
-    id: '2',
-    nickname: 'Admin User',
-    email: 'admin@example.com',
-    password: 'admin123',
-    role: 'admin'
-  },
-  {
-    id: '3',
-    nickname: 'Test User',
-    email: 'test@example.com',
-    password: 'test123',
-    role: 'user'
-  }
-];
+const API_BASE_URL = 'http://localhost:8080/v1';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -80,26 +70,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  const register = useCallback(async (nickname: string, email: string, password: string) => {
+  const register = useCallback(async (username: string, email: string, password: string) => {
     try {
-      // Here you would normally make an API call to your backend
-      // For now, we'll simulate a successful registration
-      const mockUser = {
-        id: '1',
-        nickname: nickname, // Changed from name
-        email: email
+      const response = await fetch(`${API_BASE_URL}/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username, // Changed from nickname
+          email,
+          password
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Registration failed');
+      }
+
+      const userData = await response.json();
+      
+      // Assuming the backend returns user data and a token
+      const user = {
+        id: userData.id,
+        username: userData.username, // Changed from nickname
+        email: userData.email
       };
-      
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setUser(mockUser);
+
+      // Store the token if your backend provides one
+      if (userData.token) {
+        localStorage.setItem('token', userData.token);
+      }
+
+      setUser(user);
       setError(null);
-      // Store auth token in localStorage
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      localStorage.setItem('user', JSON.stringify(user));
+      
     } catch (err) {
-      setError('Registration failed');
-      throw new Error('Registration failed');
+      setError(err instanceof Error ? err.message : 'Registration failed');
+      throw err;
     }
   }, []);
 

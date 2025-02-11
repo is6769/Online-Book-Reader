@@ -11,4 +11,6 @@ public interface AppRoleRepository extends JpaRepository<AppRole, Long> {
 
     @Override
     List<AppRole> findAll();
+
+    AppRole findByName(String name);
 }

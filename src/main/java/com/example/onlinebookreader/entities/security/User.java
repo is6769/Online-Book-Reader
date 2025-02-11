@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,9 +33,13 @@ public class User {
     private String password;
 
     @Column(nullable = false)
+    private String email;
+
+    @CreationTimestamp
+    @Column(nullable = false)
     private LocalDateTime registrationDateAndTime;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime lastLoginDateAndTime;
 
     @ManyToMany
