@@ -1,6 +1,8 @@
 package com.example.onlinebookreader.config;
 
 import com.example.onlinebookreader.security.CustomUserDetailsService;
+import com.example.onlinebookreader.security.JwtAuthenticationFilter;
+import com.example.onlinebookreader.security.PasswordEmailAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,13 +22,14 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
 
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,JwtAuthenticationFilter jwtFilter) throws Exception {
 //        http.formLogin( c -> {
 //            c.successHandler((
 //                (request, response, authentication) -> {
@@ -40,9 +43,13 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests(c -> {
             c.anyRequest().permitAll();
         });
+        http.addFilterAfter(jwtFilter, PasswordEmailAuthenticationFilter.class);
+        http.sessionManagement( c -> {
+            c.sessionAuthenticationStrategy()
+        })
         //http.formLogin(AbstractHttpConfigurer::disable);
         //http.formLogin(Customizer.withDefaults());
-        http.formLogin(AbstractHttpConfigurer::disable);
+        //http.formLogin(AbstractHttpConfigurer::disable);
         http.httpBasic(AbstractHttpConfigurer::disable);
         http.csrf(AbstractHttpConfigurer::disable);
 

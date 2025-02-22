@@ -11,3 +11,6 @@ spring:
         driver-class-name: org.postgresql.Driver
     application:
         name: OnlineBookReader
+auth:
+    jwt:
+        secret: 

@@ -5,6 +5,8 @@ import com.example.onlinebookreader.entities.security.CommonUser;
 import com.example.onlinebookreader.payloads.UserCredentialsForLoginPayload;
 import com.example.onlinebookreader.payloads.UserCredentialsForRegistrationPayload;
 import com.example.onlinebookreader.repositories.AppRoleRepository;
+import com.example.onlinebookreader.security.JwtService;
+import com.example.onlinebookreader.security.UsernamePasswordAuthService;
 import com.example.onlinebookreader.security.userdetails.ApplicationUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.provisioning.UserDetailsManager;
@@ -18,31 +20,40 @@ import java.util.List;
 public class SecurityRestController {
 
     private final UserDetailsManager userDetailsManager;
-    private final AppRoleRepository roleRepository;
+    private final UsernamePasswordAuthService usernamePasswordAuthService;
+    private final JwtService jwtService;
 
     @Autowired
-    public SecurityRestController(UserDetailsManager userDetailsManager,AppRoleRepository roleRepository) {
+    public SecurityRestController(UserDetailsManager userDetailsManager, AppRoleRepository roleRepository, UsernamePasswordAuthService usernamePasswordAuthService, JwtService jwtService) {
         this.userDetailsManager = userDetailsManager;
-        this.roleRepository=roleRepository;
+        this.usernamePasswordAuthService = usernamePasswordAuthService;
+        this.jwtService = jwtService;
     }
 
-    @PostMapping("v1/register")
+    @PostMapping("v1/registration")
     public String register(@RequestBody UserCredentialsForRegistrationPayload userCredentialsForRegistrationPayload){
-        AppRole role_common=roleRepository.findByName("ROLE_COMMON");
-        CommonUser commonUser=CommonUser.builder()
-                .username(userCredentialsForRegistrationPayload.username())
-                .email(userCredentialsForRegistrationPayload.email())
-                .password(userCredentialsForRegistrationPayload.password())
-                .roles(List.of(role_common))
-                .build();
-        var applicationUserDetails=new ApplicationUserDetails(commonUser);
-        userDetailsManager.createUser(applicationUserDetails);
+        jwtService.generateJwtForRegistrationVerification();
+        userDetailsManager.createUser(
+                usernamePasswordAuthService.createCommonUser(userCredentialsForRegistrationPayload)
+        );
+        return "Successfully registered user";
+    }
+
+    @GetMapping("v1/registration/verify")
+    public String register(@RequestParam String token){
+
+        jwtService.validateJwtToken()
+
+        userDetailsManager.createUser(
+                usernamePasswordAuthService.createCommonUser(userCredentialsForRegistrationPayload)
+        );
         return "Successfully registered user";
     }
 
     @PostMapping("v1/login")
     public String login(@RequestBody UserCredentialsForLoginPayload userCredentialsForLoginPayload){
         //userDetailsManager.loadUserByUsername()
+        jwtService.generateJwt();
         return "Succefully Authenticated";
     }
 }
