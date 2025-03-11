@@ -1,146 +1,156 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
-import { initKeycloak, default as keycloak } from '../config/keycloakInit';
-import { KeycloakOnLoad } from 'keycloak-js';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import keycloak, { keycloakInitOptions } from '../config/keycloak';
 
+// Define user type based on Keycloak token info
 interface User {
   id: string;
-  username: string; // Changed from nickname
+  username: string;
   email: string;
+  roles: string[];
 }
 
+// Define the shape of our authentication context
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: () => void;
-  register: (username: string, email: string, password: string) => Promise<void>; // Changed parameter name
-  logout: () => void;
+  isInitialized: boolean;
+  isLoading: boolean;
   error: string | null;
+  login: () => Promise<void>;
+  logout: () => Promise<void>;
+  register: () => Promise<void>;
 }
 
-interface MockUser extends User {
-  password: string;
-}
-
-const MOCK_USERS: MockUser[] = [
-  {
-    id: '1',
-    username: 'testuser',
-    email: 'test@example.com',
-    password: 'password123'
-  }
-];
-
+// Create the context with default values
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
-  login: () => {},
-  register: async () => {},
-  logout: () => {},
-  error: null
+  isInitialized: false,
+  isLoading: true,
+  error: null,
+  login: async () => {},
+  logout: async () => {},
+  register: async () => {}
 });
 
-const API_BASE_URL = 'http://localhost:8080/v1';
+// Let's track initialization to prevent multiple init calls
+let keycloakInitPromise: Promise<boolean> | null = null;
 
+// Create provider component
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Initialize Keycloak once on mount using the cached promise
-  useEffect(() => {
-    initKeycloak()
-      .then((authenticated) => {
-        console.log('Keycloak initialized, authenticated:', authenticated);
-        if (authenticated) {
-          // Handle token from Keycloak
-          const token = keycloak.token;
-          const tokenParsed = keycloak.tokenParsed;
-          if (token && tokenParsed) {
-            const keycloakUser: User = {
-              id: tokenParsed.sub ?? '',
-              username: tokenParsed.preferred_username,
-              email: tokenParsed.email
-            };
-            setUser(keycloakUser);
-            localStorage.setItem('token', token);
-            localStorage.setItem('user', JSON.stringify(keycloakUser));
-          }
-        }
-      })
-      .catch((err) => {
-        console.error('Failed to initialize Keycloak', err);
-      });
-  }, []);
-
-  const login = useCallback((): Promise<void> => {
-    if (!keycloak.authenticated) {
-      return keycloak.login();
-    }
-    return Promise.resolve();
-  }, []);
-
-  const register = useCallback(async (username: string, email: string, password: string) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username, // Changed from nickname
-          email,
-          password
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Registration failed');
-      }
-
-      const userData = await response.json();
-      
-      // Assuming the backend returns user data and a token
-      const user = {
-        id: userData.id,
-        username: userData.username, // Changed from nickname
-        email: userData.email
+  // Extract user information from Keycloak token
+  const updateUserInfo = useCallback(() => {
+    console.log("Updating user info, authenticated:", keycloak.authenticated);
+    if (keycloak.authenticated && keycloak.tokenParsed) {
+      console.log("Token parsed:", keycloak.tokenParsed);
+      const keycloakUser: User = {
+        id: keycloak.subject || '',
+        username: keycloak.tokenParsed.preferred_username || '',
+        email: keycloak.tokenParsed.email || '',
+        roles: keycloak.tokenParsed.realm_access?.roles || []
       };
-
-      // Store the token if your backend provides one
-      if (userData.token) {
-        localStorage.setItem('token', userData.token);
-      }
-
-      setUser(user);
-      setError(null);
-      localStorage.setItem('user', JSON.stringify(user));
-      
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Registration failed');
-      throw err;
+      console.log("Setting user:", keycloakUser);
+      setUser(keycloakUser);
+    } else {
+      setUser(null);
     }
   }, []);
 
-  const logout = useCallback(() => {
-    setUser(null);
-    setError(null);
-    localStorage.removeItem('user');
+  // Initialize Keycloak
+  useEffect(() => {
+    const initializeKeycloak = async () => {
+      try {
+        setIsLoading(true);
+        console.log("Starting Keycloak initialization");
+
+        if (!keycloakInitPromise) {
+          console.log("Creating new init promise with options:", keycloakInitOptions);
+          keycloakInitPromise = keycloak.init(keycloakInitOptions);
+        } else {
+          console.log("Using existing init promise");
+        }
+
+        const authenticated = await keycloakInitPromise;
+        console.log("Keycloak initialized, authenticated:", authenticated);
+
+        // Set up token refresh
+        keycloak.onTokenExpired = () => {
+          console.log("Token expired, refreshing");
+          keycloak.updateToken(70)
+            .then(refreshed => {
+              console.log("Token refreshed:", refreshed);
+              if (refreshed) {
+                updateUserInfo();
+              }
+            })
+            .catch(err => {
+              console.error("Failed to refresh token", err);
+              setError("Session expired. Please login again.");
+              setUser(null);
+            });
+        };
+
+        updateUserInfo();
+        setIsInitialized(true);
+      } catch (err) {
+        console.error("Error initializing Keycloak:", err);
+        setError("Authentication service initialization failed");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeKeycloak();
+  }, [updateUserInfo]);
+
+  // Handle login - redirect to Keycloak login page
+  const login = useCallback(async (): Promise<void> => {
+    console.log("Login called, redirecting to Keycloak login");
+    return keycloak.login({
+      redirectUri: window.location.origin + '/callback'
+    });
   }, []);
+
+  // Handle register - redirect to Keycloak registration page
+  const register = useCallback(async (): Promise<void> => {
+    console.log("Register called, redirecting to Keycloak register");
+    return keycloak.register({
+      redirectUri: window.location.origin + '/callback'
+    });
+  }, []);
+
+  // Handle logout - clear local user and redirect to Keycloak logout
+  const logout = useCallback(async (): Promise<void> => {
+    console.log("Logout called, redirecting to Keycloak logout");
+    setUser(null);
+    return keycloak.logout({
+      redirectUri: window.location.origin
+    });
+  }, []);
+
+  // Create context value
+  const contextValue: AuthContextType = {
+    user,
+    isAuthenticated: !!keycloak.authenticated && !!user,
+    isInitialized,
+    isLoading,
+    error,
+    login,
+    logout,
+    register
+  };
 
   return (
-    <AuthContext.Provider 
-      value={{ 
-        user, 
-        isAuthenticated: !!user, 
-        login, 
-        register, 
-        logout,
-        error 
-      }}
-    >
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+// Export hook for easy context consumption
 export const useAuth = () => useContext(AuthContext);

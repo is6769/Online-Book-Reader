@@ -17,6 +17,7 @@ import RegisterPage from './components/Auth/RegisterPage';
 import ForgotPasswordPage from './components/Auth/ForgotPasswordPage';
 import LibraryPage from './components/Library/LibraryPage';
 import BookPage from './components/Book/BookPage';
+import Callback from './components/Auth/Callback';
 
 // Protected Pages
 import PrivateRoute from './components/Auth/PrivateRoute';
@@ -57,6 +58,7 @@ const App: React.FC = () => {
                   <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                   <Route path="/library" element={<LibraryPage />} />
                   <Route path="/book/:id" element={<BookPage />} />
+                  <Route path="/callback" element={<Callback />} /> {/* Add this line */}
 
                   {/* Protected Profile Routes */}
                   <Route path="/profile" element={

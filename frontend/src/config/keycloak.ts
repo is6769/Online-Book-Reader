@@ -1,9 +1,20 @@
 import Keycloak from 'keycloak-js';
 
+// Create Keycloak instance with explicit redirectUri
 const keycloak = new Keycloak({
-  // Ensure the URL is correct, spelled "keycloak" and accessible.
-  url: 'http://localhost:8080',  // Update if your Keycloak server URL differs
-  realm: 'react-frontend',            // Confirm this realm exists on your Keycloak server
-  clientId: 'react-frontend'          // Confirm this clientId is properly configured in Keycloak
+  url: 'http://localhost:8080',
+  realm: 'react-frontend',
+  clientId: 'react-frontend'
 });
-export { keycloak };
+
+// Configure initialization options
+export const keycloakInitOptions = {
+  onLoad: 'check-sso' as const,
+  silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+  pkceMethod: 'S256' as const,
+  checkLoginIframe: false,
+  enableLogging: true, // Enable logging for debugging
+  redirectUri: window.location.origin + '/callback' // Explicitly set redirect URI
+};
+
+export default keycloak;

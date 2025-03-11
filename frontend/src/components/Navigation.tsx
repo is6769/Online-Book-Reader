@@ -1,21 +1,14 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { useMenu } from '../contexts/MenuContext';
 import '../styles/Navigation.css';
 
 function Navigation() {
-  const { user, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { toggleMenu, isMenuOpen } = useMenu();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // ...any required logout logic...
-    logout();
-    navigate('/login');
-  };
 
   return (
     <nav className="navbar">
@@ -37,12 +30,12 @@ function Navigation() {
       </div>
 
       <div className="nav-section nav-right">
-        {user ? (
+        {isAuthenticated && user ? (
           <>
             <Link to="/profile" className="nav-link">
-              {user.nickname}
+              {user.username}
             </Link>
-            <button onClick={handleLogout} className="nav-link logout-button">
+            <button onClick={logout} className="nav-link logout-button">
               Logout
             </button>
           </>
