@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { initKeycloak, default as keycloak } from '../config/keycloakInit';
+import { KeycloakOnLoad } from 'keycloak-js';
 
 interface User {
   id: string;
@@ -9,7 +11,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: () => void;
   register: (username: string, email: string, password: string) => Promise<void>; // Changed parameter name
   logout: () => void;
   error: string | null;
@@ -31,7 +33,7 @@ const MOCK_USERS: MockUser[] = [
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
-  login: async () => {},
+  login: () => {},
   register: async () => {},
   logout: () => {},
   error: null
@@ -43,31 +45,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const login = useCallback(async (email: string, password: string) => {
-    try {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
+  // Initialize Keycloak once on mount using the cached promise
+  useEffect(() => {
+    initKeycloak()
+      .then((authenticated) => {
+        console.log('Keycloak initialized, authenticated:', authenticated);
+        if (authenticated) {
+          // Handle token from Keycloak
+          const token = keycloak.token;
+          const tokenParsed = keycloak.tokenParsed;
+          if (token && tokenParsed) {
+            const keycloakUser: User = {
+              id: tokenParsed.sub ?? '',
+              username: tokenParsed.preferred_username,
+              email: tokenParsed.email
+            };
+            setUser(keycloakUser);
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(keycloakUser));
+          }
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to initialize Keycloak', err);
+      });
+  }, []);
 
-      // Find user with matching credentials
-      const mockUser = MOCK_USERS.find(
-        u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
-      );
-
-      if (!mockUser) {
-        throw new Error('Invalid email or password');
-      }
-
-      // Create user object without password
-      const { password: _, ...userWithoutPassword } = mockUser;
-      setUser(userWithoutPassword);
-      setError(null);
-
-      // Store user in localStorage (in real app, store JWT token instead)
-      localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed');
-      throw err;
+  const login = useCallback((): Promise<void> => {
+    if (!keycloak.authenticated) {
+      return keycloak.login();
     }
+    return Promise.resolve();
   }, []);
 
   const register = useCallback(async (username: string, email: string, password: string) => {
